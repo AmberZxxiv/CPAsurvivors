@@ -5,6 +5,10 @@ TagManager:
   serializedVersion: 2
   tags:
   - Ground
+  - Coin
+  - Priest
+  - Demon
+  - Ghost
   layers:
   - Default
   - TransparentFX

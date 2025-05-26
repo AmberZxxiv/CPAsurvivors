@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Player_Movement : MonoBehaviour
 {
@@ -23,6 +24,19 @@ public class Player_Movement : MonoBehaviour
     private float mouseRotation = 0f;
     public Transform cameraTransform;
 
+    //Esto es pa que aparezcan las vidas y monedas en el HUD
+    public int lifes;
+    public int money;
+    public GameObject health;
+    public GameObject earned;
+    public GameObject heartSprite;
+    public GameObject coinSprite;
+
+    //Esto pa los menus varios
+    public GameObject pauseMenu;
+    public GameObject deadMenu;
+    public GameObject winMenu;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -32,6 +46,17 @@ public class Player_Movement : MonoBehaviour
         // centramos el cursos en pantalla y lo ocultamos
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+
+        // colocamos las vidas y monedas en pantalla
+        // PROBLEMA: aparecen solapadas una encima de otra
+        for (int x = 0; x < lifes; x++) 
+        {
+            Instantiate(heartSprite, health.transform);
+        }
+        for (int x = 0; x < money; x++)
+        {
+            Instantiate(coinSprite, earned.transform);
+        }
     }
 
     // Update is called once per frame
@@ -54,6 +79,31 @@ public class Player_Movement : MonoBehaviour
         {
             Jump();
         }
+
+        // si pulsamos el ESC, panel de pausa y activamos cursor
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Time.timeScale = 0;
+            pauseMenu.SetActive(true);
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+        }
+        // si llegas a 0 vidas, panel de muerte y activamos cursor
+        if (lifes <= 0)
+        {
+            Time.timeScale = 0;
+            deadMenu.SetActive(true);
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+        }
+        // si llegas a 5 monedas, panel de victoria y activamos cursor
+        if (money >= 5)
+        {
+            Time.timeScale = 0;
+            winMenu.SetActive(true);
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+        }
     }
 
     private void FixedUpdate()
@@ -74,6 +124,13 @@ public class Player_Movement : MonoBehaviour
             rb.velocity += Vector3.up * Physics.gravity.y * fallSpeed * Time.fixedDeltaTime;
         }
     }
+    void Jump()
+    {
+        //actualizamos el estado del salto, la altura y damos la fuerza
+        isGrounded = false;
+        rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
+        rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+    }
 
     void OnCollisionEnter(Collision collision)
     {
@@ -83,13 +140,53 @@ public class Player_Movement : MonoBehaviour
             print("toco");
             isGrounded = true;
         }
+        // te suma una moneda e instancia en la UI
+        if (collision.gameObject.CompareTag("Coin")) 
+        {
+            Destroy(collision.gameObject);
+            money += 1;
+            Instantiate(coinSprite, earned.transform);
+        }
+        // te resta dinero y lo desactiva en la UI
+        // PROBLEMA "child out of bounds" y deja de quitar los hijos
+        if (collision.gameObject.CompareTag("Ghost"))
+        {
+            //Destroy(collision.gameObject);
+            money--;
+            earned.transform.GetChild(money).gameObject.SetActive(false);
+        }
+        // te resta una vida y desactiva 1 hijo en la UI
+        if (collision.gameObject.CompareTag("Demon")) 
+        {
+            //Destroy(collision.gameObject);
+            lifes--;
+            health.transform.GetChild(lifes).gameObject.SetActive(false);
+        }
+        // muerte instantanea y activa el cursor
+        if (collision.gameObject.CompareTag("Priest"))
+        {
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+            Time.timeScale = 0;
+            deadMenu.SetActive(true);
+        }
     }
 
-    void Jump()
+    public void QuitPause() // quita el panel de pausa, reanuda el tiempo y quita el cursor
     {
-        //actualizamos el estado, la altura y damos la fuerza
-        isGrounded = false;
-        rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
-        rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+        pauseMenu.SetActive(false);
+        Time.timeScale = 1;
+    }
+
+    public void RestartGame() // recarga la escena de juego
+    {
+        SceneManager.LoadScene(0);
+    }
+
+    public void MainMenu() // carga la escena de menu inicial
+    {
+        SceneManager.LoadScene(1);
     }
 }
