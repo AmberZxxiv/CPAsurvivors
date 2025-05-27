@@ -104,6 +104,14 @@ public class Player_Movement : MonoBehaviour
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
         }
+        // al caerse del mapa se muere
+        if (transform.position.y < -50)
+        {
+            Time.timeScale = 0;
+            deadMenu.SetActive(true);
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+        }
     }
 
     private void FixedUpdate()
