@@ -156,26 +156,20 @@ public class Player_Movement : MonoBehaviour
             money += 1;
             Instantiate(coinSprite, earned.transform);
         }
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
         // te resta dinero y lo desactiva en la UI
-        if (other.gameObject.CompareTag("Ghost") && money > 0)
+        if (collision.gameObject.CompareTag("Ghost") && money > 0)
         {
-            //Destroy(collision.gameObject);
             money--;
             Destroy(earned.transform.GetChild(0).gameObject);
         }
         // te resta una vida y desactiva 1 hijo en la UI
-        if (other.gameObject.CompareTag("Demon"))
+        if (collision.gameObject.CompareTag("Demon"))
         {
-            //Destroy(collision.gameObject);
             lifes--;
             health.transform.GetChild(lifes).gameObject.SetActive(false);
         }
         // muerte instantanea y activa el cursor
-        if (other.gameObject.CompareTag("Priest"))
+        if (collision.gameObject.CompareTag("Priest"))
         {
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
@@ -183,7 +177,6 @@ public class Player_Movement : MonoBehaviour
             deadMenu.SetActive(true);
         }
     }
-
     public void QuitPause() // quita el panel de pausa, reanuda el tiempo y quita el cursor
     {
         Cursor.lockState = CursorLockMode.Locked;
