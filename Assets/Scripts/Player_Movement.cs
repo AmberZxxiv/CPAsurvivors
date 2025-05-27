@@ -8,10 +8,12 @@ using UnityEngine.SceneManagement;
 public class Player_Movement : MonoBehaviour
 {
     //Esto es pa poder mover el player
+    #region /////////PLAYER MOVEMENT/////////
     private Rigidbody rb;
     public float movSpeed;
     private float movLateral;
     private float movFrontal;
+    #endregion
 
     //Esto es pa gestionar el salto
     public float jumpForce;
