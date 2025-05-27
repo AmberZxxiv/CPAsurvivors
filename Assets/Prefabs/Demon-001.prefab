@@ -13,6 +13,8 @@ GameObject:
   - component: {fileID: 6584028078492147383}
   - component: {fileID: 5575996265837551170}
   - component: {fileID: 3751168855890520419}
+  - component: {fileID: 7338877690915732681}
+  - component: {fileID: 627086712635029735}
   m_Layer: 0
   m_Name: Demon-001
   m_TagString: Demon
@@ -131,3 +133,40 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &7338877690915732681
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8221480836074732826}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 24ddac5e846f51640bfed3c8ce7e9c46, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objetivo: {fileID: 3572953721334070687, guid: 0787d84a5fd3a5941a7819f591d4579b, type: 3}
+  vel: 10
+  IA: {fileID: 627086712635029735}
+--- !u!195 &627086712635029735
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8221480836074732826}
+  m_Enabled: 1
+  m_AgentTypeID: -334000983
+  m_Radius: 0.5
+  m_Speed: 0
+  m_Acceleration: 100
+  avoidancePriority: 50
+  m_AngularSpeed: 1000
+  m_StoppingDistance: 1
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 1
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
