@@ -48,7 +48,6 @@ public class Player_Movement : MonoBehaviour
         Cursor.visible = false;
 
         // colocamos las vidas y monedas en pantalla
-        // PROBLEMA: aparecen solapadas una encima de otra
         for (int x = 0; x < lifes; x++) 
         {
             Instantiate(heartSprite, health.transform);
@@ -149,29 +148,32 @@ public class Player_Movement : MonoBehaviour
             isGrounded = true;
         }
         // te suma una moneda e instancia en la UI
-        if (collision.gameObject.CompareTag("Coin")) 
+        if (collision.gameObject.CompareTag("Coin"))
         {
             Destroy(collision.gameObject);
             money += 1;
             Instantiate(coinSprite, earned.transform);
         }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
         // te resta dinero y lo desactiva en la UI
-        // PROBLEMA "child out of bounds" y deja de quitar los hijos
-        if (collision.gameObject.CompareTag("Ghost"))
+        if (other.gameObject.CompareTag("Ghost") && money > 0)
         {
             //Destroy(collision.gameObject);
             money--;
-            earned.transform.GetChild(money).gameObject.SetActive(false);
+            Destroy(earned.transform.GetChild(0).gameObject);
         }
         // te resta una vida y desactiva 1 hijo en la UI
-        if (collision.gameObject.CompareTag("Demon")) 
+        if (other.gameObject.CompareTag("Demon"))
         {
             //Destroy(collision.gameObject);
             lifes--;
             health.transform.GetChild(lifes).gameObject.SetActive(false);
         }
         // muerte instantanea y activa el cursor
-        if (collision.gameObject.CompareTag("Priest"))
+        if (other.gameObject.CompareTag("Priest"))
         {
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
