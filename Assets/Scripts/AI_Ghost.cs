@@ -19,8 +19,9 @@ public class AI_Ghost : MonoBehaviour
         // que empiece a hacer sus cosas
         isFollowing = false;
         AI.speed = speed;
-        targetPoint = 0;
+        targetPoint = Random.Range(0, patrolPoints.Length);
         AI.SetDestination(patrolPoints[targetPoint].position);
+        print("NEW target " + targetPoint);
     }
 
     // Update is called once per frame
@@ -66,8 +67,14 @@ public class AI_Ghost : MonoBehaviour
 
     void NextTarget()
     {
-        // que sume 1 a la lista y vaya pa alla
-        targetPoint = (targetPoint + 1) % patrolPoints.Length;
+        // pilla un nuevo punto siempre que no sea el mismo de antes
+        int lastCheckPoint = targetPoint;
+        do
+        {
+            targetPoint = Random.Range(0, patrolPoints.Length);
+        }
+        while (targetPoint == lastCheckPoint && patrolPoints.Length > 1);
+
         print("NEW target " + targetPoint);
         AI.SetDestination(patrolPoints[targetPoint].position);
     }
