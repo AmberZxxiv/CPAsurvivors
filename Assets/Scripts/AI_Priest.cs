@@ -13,13 +13,12 @@ public class AI_PRiest : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        AI.speed = speed;
     }
 
     // Update is called once per frame
     void Update()
     {
-        AI.speed = speed;
         if (isFollowing)
         {
             AI.SetDestination(objective.position);
