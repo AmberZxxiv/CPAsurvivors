@@ -33,6 +33,6 @@ public class Spawner : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // if coins del player -1 repite el loop
+       
     }
 }

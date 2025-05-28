@@ -39,6 +39,8 @@ public class Player_Movement : MonoBehaviour
     public GameObject deadMenu;
     public GameObject winMenu;
 
+    public Spawner spawner;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -161,6 +163,22 @@ public class Player_Movement : MonoBehaviour
         {
             money--;
             Destroy(earned.transform.GetChild(0).gameObject);
+            //bucle pa reponer 1 moneda en algun spawner libre
+            // NO TOCAR PUEDE EXPLOTAR !!!
+            for (int i = 0; i < 1; i++)
+            {
+                // NO TOCAR PUEDE EXPLOTAR !!!
+                GameObject spawnerToInstantiate = spawner.coinSpawner[Random.Range(0, spawner.coinSpawner.Count)];// pillo un spawner random de mi lista
+                // NO TOCAR PUEDE EXPLOTAR !!!
+                while (spawnerToInstantiate.transform.childCount != 0) // cuando el hijo no sea 0, buscame otro
+                {
+                    spawnerToInstantiate = spawner.coinSpawner[Random.Range(0, spawner.coinSpawner.Count)];
+                }
+                Instantiate(spawner.coinPref, spawnerToInstantiate.transform);// instancio una moneda en ese spawner random
+                // NO TOCAR PUEDE EXPLOTAR !!!
+                Debug.LogWarning(i);
+            }
+            // NO TOCAR PUEDE EXPLOTAR !!!
         }
         // te resta una vida y desactiva 1 hijo en la UI
         if (collision.gameObject.CompareTag("Demon"))
