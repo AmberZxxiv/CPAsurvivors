@@ -123,8 +123,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objective: {fileID: 0}
-  speed: 13
+  speed: 11
   AI: {fileID: 4971313389127594934}
+  patrolPoints: []
+  targetPoint: 0
 --- !u!195 &4971313389127594934
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -166,5 +168,5 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 7.014265, y: 4.4280434, z: 58.05438}
-  m_Center: {x: -0.046359062, y: 0.12742996, z: 28.028162}
+  m_Size: {x: 13.478074, y: 4.4280434, z: 63.932377}
+  m_Center: {x: -0.19444227, y: 0.12742996, z: 30.967161}

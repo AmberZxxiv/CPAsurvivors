@@ -34,11 +34,13 @@ public class Player_Movement : MonoBehaviour
     public GameObject heartSprite;
     public GameObject coinSprite;
 
-    //Esto pa los menus varios
+    //Esto pa los menus varios y victoria
     public GameObject pauseMenu;
     public GameObject deadMenu;
     public GameObject winMenu;
+    public GameObject exitZone;
 
+    // llamo al script del spawner de monedas
     public Spawner spawner;
 
     // Start is called before the first frame update
@@ -100,7 +102,7 @@ public class Player_Movement : MonoBehaviour
             Cursor.visible = true;
         }
         // si llegas a 5 monedas, panel de victoria y activamos cursor
-        if (money >= 5)
+        if (money >= 5 ) // && el transform del player se acerca a la exitZone
         {
             Time.timeScale = 0;
             winMenu.SetActive(true);
@@ -185,6 +187,7 @@ public class Player_Movement : MonoBehaviour
         {
             lifes--;
             health.transform.GetChild(lifes).gameObject.SetActive(false);
+            // TP transform player a X coordenada random en lista
         }
         // muerte instantanea y activa el cursor
         if (collision.gameObject.CompareTag("Priest"))
