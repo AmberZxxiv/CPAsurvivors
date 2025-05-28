@@ -31,7 +31,7 @@ Transform:
   m_GameObject: {fileID: 846302319525350556}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 21.681736, y: 1.9205539, z: -20.776764}
+  m_LocalPosition: {x: 12.37, y: 0.75, z: -20.776764}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -146,8 +146,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objective: {fileID: 0}
-  speed: 9
+  speed: 10
   AI: {fileID: 8753113510515525017}
+  patrolPoints:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  targetPoint: 0
 --- !u!195 &8753113510515525017
 NavMeshAgent:
   m_ObjectHideFlags: 0
