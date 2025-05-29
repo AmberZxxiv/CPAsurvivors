@@ -24,4 +24,10 @@ public class Main_Menu : MonoBehaviour
     {
         SceneManager.LoadScene(0);
     }
+
+    public void ExitGame()
+    {
+        Debug.Log("Salgo del .exe");
+        Application.Quit();
+    }
 }
