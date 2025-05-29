@@ -25,6 +25,7 @@ public class Player_Movement : MonoBehaviour
     public float mouseSensitivity;
     private float mouseRotation = 0f;
     public Transform cameraTransform;
+    public Transform lanternTransform;
 
     //Esto es pa que aparezcan las vidas y monedas en el HUD
     public int lifes;
@@ -67,13 +68,15 @@ public class Player_Movement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // le damos el valor X a la rotacion de la camara con el cursor
+        // cogemos el valor del cursor para poder darlo de vuelta
         float horizontalRotation = Input.GetAxis("Mouse X") * mouseSensitivity;
         transform.Rotate(0, horizontalRotation, 0);
-        // le damos el valor Y a la camara y lo bloqueamos en los polos
         mouseRotation -= Input.GetAxis("Mouse Y") * mouseSensitivity;
         mouseRotation = Mathf.Clamp(mouseRotation, -90f, 90f);
+        // lo copiamos en la camara y la linterna, y lo bloqueamos en los polos
         cameraTransform.localRotation = Quaternion.Euler(mouseRotation, 0, 0);
+        lanternTransform.localRotation = Quaternion.Euler(mouseRotation, 0, 0);
+
 
         // con esto cogemos los controles del player
         movLateral = Input.GetAxisRaw("Horizontal");
@@ -98,14 +101,6 @@ public class Player_Movement : MonoBehaviour
         {
             Time.timeScale = 0;
             deadMenu.SetActive(true);
-            Cursor.lockState = CursorLockMode.None;
-            Cursor.visible = true;
-        }
-        // si llegas a 5 monedas, panel de victoria y activamos cursor
-        if (money >= 5 ) // && el transform del player se acerca a la exitZone
-        {
-            Time.timeScale = 0;
-            winMenu.SetActive(true);
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
         }
@@ -182,13 +177,6 @@ public class Player_Movement : MonoBehaviour
             }
             // NO TOCAR PUEDE EXPLOTAR !!!
         }
-        // te resta una vida y desactiva 1 hijo en la UI
-        if (collision.gameObject.CompareTag("Demon"))
-        {
-            lifes--;
-            health.transform.GetChild(lifes).gameObject.SetActive(false);
-            // TP transform player a X coordenada random en lista
-        }
         // muerte instantanea y activa el cursor
         if (collision.gameObject.CompareTag("Priest"))
         {
@@ -198,6 +186,19 @@ public class Player_Movement : MonoBehaviour
             deadMenu.SetActive(true);
         }
     }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        // si llegas a 5 monedas, panel de victoria y activamos cursor
+        if (money >= 5) 
+        {
+            Time.timeScale = 0;
+            winMenu.SetActive(true);
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+        }
+    }
+
     public void QuitPause() // quita el panel de pausa, reanuda el tiempo y quita el cursor
     {
         Cursor.lockState = CursorLockMode.Locked;
