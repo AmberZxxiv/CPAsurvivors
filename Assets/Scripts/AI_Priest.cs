@@ -12,6 +12,10 @@ public class AI_PRiest : MonoBehaviour
     private bool isFollowing;
     public Transform[] patrolPoints;
     public int targetPoint;
+    public GameObject scarePriest;
+
+    // llamo al script del player
+    public Player_Movement player;
 
     // Start is called before the first frame update
     void Start()
@@ -46,6 +50,19 @@ public class AI_PRiest : MonoBehaviour
             AI.SetDestination(objective.position);
         }
     }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        // susto, muerte instantanea y activa el cursor
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            scarePriest.SetActive(true);
+            StartCoroutine(EndScare());
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+            player.deadMenu.SetActive(true);
+        }
+    }
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
@@ -54,7 +71,6 @@ public class AI_PRiest : MonoBehaviour
             print("FOLLOW");
         }
     }
-
     private void OnTriggerExit(Collider other)
     {
         if (other.CompareTag("Player"))
@@ -76,5 +92,14 @@ public class AI_PRiest : MonoBehaviour
 
         print("NEW target " + targetPoint);
         AI.SetDestination(patrolPoints[targetPoint].position);
+    }
+
+    IEnumerator EndScare()
+    {
+        yield return new WaitForSeconds(1);
+        scarePriest.SetActive(false);
+        print("End Scare");
+        Time.timeScale = 0;
+        //pongo el tiempo 0 aqui porque sino nunca se desctiva el susto
     }
 }

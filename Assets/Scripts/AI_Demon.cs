@@ -10,6 +10,7 @@ public class AI_Demon : MonoBehaviour
     public int speed;
     public NavMeshAgent AI;
     public Transform[] punishZones;
+    public GameObject scareDemon;
 
     // llamo al script del player
     public Player_Movement player;
@@ -31,10 +32,19 @@ public class AI_Demon : MonoBehaviour
         // te resta una vida y desactiva 1 hijo en la UI
         if (collision.gameObject.CompareTag("Player"))
         {
+            scareDemon.SetActive(true);
+            StartCoroutine(EndScare());
             player.lifes--;
             player.health.transform.GetChild(player.lifes).gameObject.SetActive(false);
             player.gameObject.transform.position = punishZones[Random.Range(0, punishZones.Length)].position;
             // TP transform player a X coordenada random en lista
         }
+    }
+
+    IEnumerator EndScare()
+    {
+        yield return new WaitForSeconds(1);
+        scareDemon.SetActive(false);
+        print("End Scare");
     }
 }

@@ -12,6 +12,10 @@ public class AI_Ghost : MonoBehaviour
     private bool isFollowing;
     public Transform[] patrolPoints;
     public int targetPoint;
+    public GameObject scareGhost;
+
+    // llamo al script del player
+    public Player_Movement player;
 
     // Start is called before the first frame update
     void Start()
@@ -47,6 +51,38 @@ public class AI_Ghost : MonoBehaviour
         }
     }
 
+    private void OnCollisionEnter(Collision collision)
+    {
+        // susto y si tienes dinero te resta 1 y lo desactiva en la UI
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            scareGhost.SetActive(true);
+            StartCoroutine(EndScare());
+
+            if (player.money > 0)
+            {
+                player.money--;
+                Destroy(player.earned.transform.GetChild(0).gameObject);
+                //bucle pa reponer 1 moneda en algun spawner libre
+                // NO TOCAR PUEDE EXPLOTAR !!!
+                for (int i = 0; i < 1; i++)
+                {
+                    // NO TOCAR PUEDE EXPLOTAR !!!
+                    GameObject spawnerToInstantiate = player.spawner.coinSpawner[Random.Range(0, player.spawner.coinSpawner.Count)];// pillo un spawner random de mi lista
+                                                                                                                                    // NO TOCAR PUEDE EXPLOTAR !!!
+                    while (spawnerToInstantiate.transform.childCount != 0) // cuando el hijo no sea 0, buscame otro
+                    {
+                        spawnerToInstantiate = player.spawner.coinSpawner[Random.Range(0, player.spawner.coinSpawner.Count)];
+                    }
+                    Instantiate(player.spawner.coinPref, spawnerToInstantiate.transform);// instancio una moneda en ese spawner random
+                                                                                         // NO TOCAR PUEDE EXPLOTAR !!!
+                    Debug.LogWarning(i);
+                }
+                // NO TOCAR PUEDE EXPLOTAR !!!
+            }
+        }
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
@@ -77,5 +113,12 @@ public class AI_Ghost : MonoBehaviour
 
         print("NEW target " + targetPoint);
         AI.SetDestination(patrolPoints[targetPoint].position);
+    }
+
+    IEnumerator EndScare()
+    {
+        yield return new WaitForSeconds(1);
+        scareGhost.SetActive(false);
+        print("End Scare");
     }
 }

@@ -155,36 +155,6 @@ public class Player_Movement : MonoBehaviour
             money += 1;
             Instantiate(coinSprite, earned.transform);
         }
-        // te resta dinero y lo desactiva en la UI
-        if (collision.gameObject.CompareTag("Ghost") && money > 0)
-        {
-            money--;
-            Destroy(earned.transform.GetChild(0).gameObject);
-            //bucle pa reponer 1 moneda en algun spawner libre
-            // NO TOCAR PUEDE EXPLOTAR !!!
-            for (int i = 0; i < 1; i++)
-            {
-                // NO TOCAR PUEDE EXPLOTAR !!!
-                GameObject spawnerToInstantiate = spawner.coinSpawner[Random.Range(0, spawner.coinSpawner.Count)];// pillo un spawner random de mi lista
-                // NO TOCAR PUEDE EXPLOTAR !!!
-                while (spawnerToInstantiate.transform.childCount != 0) // cuando el hijo no sea 0, buscame otro
-                {
-                    spawnerToInstantiate = spawner.coinSpawner[Random.Range(0, spawner.coinSpawner.Count)];
-                }
-                Instantiate(spawner.coinPref, spawnerToInstantiate.transform);// instancio una moneda en ese spawner random
-                // NO TOCAR PUEDE EXPLOTAR !!!
-                Debug.LogWarning(i);
-            }
-            // NO TOCAR PUEDE EXPLOTAR !!!
-        }
-        // muerte instantanea y activa el cursor
-        if (collision.gameObject.CompareTag("Priest"))
-        {
-            Cursor.lockState = CursorLockMode.None;
-            Cursor.visible = true;
-            Time.timeScale = 0;
-            deadMenu.SetActive(true);
-        }
     }
 
     private void OnTriggerEnter(Collider other)
@@ -209,11 +179,11 @@ public class Player_Movement : MonoBehaviour
 
     public void RestartGame() // recarga la escena de juego
     {
-        SceneManager.LoadScene(0);
+        SceneManager.LoadScene(1);
     }
 
     public void MainMenu() // carga la escena de menu inicial
     {
-        SceneManager.LoadScene(1);
+        SceneManager.LoadScene(0);
     }
 }
