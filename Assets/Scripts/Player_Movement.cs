@@ -159,8 +159,8 @@ public class Player_Movement : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        // si llegas a 5 monedas, panel de victoria y activamos cursor
-        if (money >= 5) 
+        // si llegas a la salida con 5 monedas, panel de victoria y activamos cursor
+        if (other.CompareTag("EXIT") && money >= 5) 
         {
             Time.timeScale = 0;
             winMenu.SetActive(true);
