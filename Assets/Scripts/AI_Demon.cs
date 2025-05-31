@@ -11,6 +11,7 @@ public class AI_Demon : MonoBehaviour
     public NavMeshAgent AI;
     public Transform[] punishZones;
     public GameObject scareDemon;
+    public AudioSource screamDemon;
 
     // llamo al script del player
     public Player_Movement player;
@@ -32,6 +33,7 @@ public class AI_Demon : MonoBehaviour
         // te resta una vida y desactiva 1 hijo en la UI
         if (collision.gameObject.CompareTag("Player"))
         {
+            screamDemon.Play();
             scareDemon.SetActive(true);
             StartCoroutine(EndScare());
             player.lifes--;

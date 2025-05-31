@@ -13,6 +13,7 @@ public class AI_Ghost : MonoBehaviour
     public Transform[] patrolPoints;
     public int targetPoint;
     public GameObject scareGhost;
+    public AudioSource screamGhost;
 
     // llamo al script del player
     public Player_Movement player;
@@ -56,6 +57,7 @@ public class AI_Ghost : MonoBehaviour
         // susto y si tienes dinero te resta 1 y lo desactiva en la UI
         if (collision.gameObject.CompareTag("Player"))
         {
+            screamGhost.Play();
             scareGhost.SetActive(true);
             StartCoroutine(EndScare());
 

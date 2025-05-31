@@ -13,6 +13,7 @@ public class AI_PRiest : MonoBehaviour
     public Transform[] patrolPoints;
     public int targetPoint;
     public GameObject scarePriest;
+    public AudioSource screamPriest;
 
     // llamo al script del player
     public Player_Movement player;
@@ -56,6 +57,7 @@ public class AI_PRiest : MonoBehaviour
         // susto, muerte instantanea y activa el cursor
         if (collision.gameObject.CompareTag("Player"))
         {
+            screamPriest.Play();
             scarePriest.SetActive(true);
             StartCoroutine(EndScare());
             Cursor.lockState = CursorLockMode.None;
