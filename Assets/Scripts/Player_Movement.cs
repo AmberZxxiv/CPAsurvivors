@@ -43,6 +43,7 @@ public class Player_Movement : MonoBehaviour
 
     // llamo al script del spawner de monedas
     public Spawner spawner;
+    public Timer timer;
 
     // Start is called before the first frame update
     void Start()
@@ -96,17 +97,10 @@ public class Player_Movement : MonoBehaviour
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
         }
-        // si llegas a 0 vidas, panel de muerte y activamos cursor
-        if (lifes <= 0)
+        // si llegas a 0 vidas o te caes, panel de muerte y activamos cursor
+        if (lifes <= 0 || transform.position.y < -50)
         {
-            Time.timeScale = 0;
-            deadMenu.SetActive(true);
-            Cursor.lockState = CursorLockMode.None;
-            Cursor.visible = true;
-        }
-        // al caerse del mapa se muere
-        if (transform.position.y < -50)
-        {
+            timer.SetTimeToBeat();
             Time.timeScale = 0;
             deadMenu.SetActive(true);
             Cursor.lockState = CursorLockMode.None;
@@ -159,9 +153,10 @@ public class Player_Movement : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        // si llegas a la salida con 5 monedas, panel de victoria y activamos cursor
+        // si llegas a la salida con 5 monedas, puntos, paneles y cursor
         if (other.CompareTag("EXIT") && money >= 5) 
         {
+            timer.SetTimeToBeat();
             Time.timeScale = 0;
             winMenu.SetActive(true);
             Cursor.lockState = CursorLockMode.None;

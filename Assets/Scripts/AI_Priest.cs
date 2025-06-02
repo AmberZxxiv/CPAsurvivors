@@ -17,6 +17,9 @@ public class AI_PRiest : MonoBehaviour
 
     // llamo al script del player
     public Player_Movement player;
+    public AI_Demon demon;
+    public AI_Ghost ghost;
+    public Timer timer;
 
     // Start is called before the first frame update
     void Start()
@@ -60,6 +63,7 @@ public class AI_PRiest : MonoBehaviour
             screamPriest.Play();
             scarePriest.SetActive(true);
             StartCoroutine(EndScare());
+            timer.SetTimeToBeat();
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
             player.deadMenu.SetActive(true);
@@ -100,6 +104,8 @@ public class AI_PRiest : MonoBehaviour
     {
         yield return new WaitForSeconds(1);
         scarePriest.SetActive(false);
+        demon.scareDemon.SetActive(false);
+        ghost.scareGhost.SetActive(false);
         print("End Scare");
         Time.timeScale = 0;
         //pongo el tiempo 0 aqui porque sino nunca se desctiva el susto
