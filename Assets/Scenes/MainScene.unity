@@ -3520,6 +3520,7 @@ MonoBehaviour:
   exitZone: {fileID: 1128950664}
   spawner: {fileID: 638322090}
   timer: {fileID: 1752990869}
+  demon: {fileID: 757074507}
 --- !u!4 &866894979
 Transform:
   m_ObjectHideFlags: 0

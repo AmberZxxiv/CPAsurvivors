@@ -44,6 +44,7 @@ public class Player_Movement : MonoBehaviour
     // llamo al script del spawner de monedas
     public Spawner spawner;
     public Timer timer;
+    public AI_Demon demon;
 
     // Start is called before the first frame update
     void Start()
@@ -100,6 +101,7 @@ public class Player_Movement : MonoBehaviour
         // si llegas a 0 vidas o te caes, panel de muerte y activamos cursor
         if (lifes <= 0 || transform.position.y < -50)
         {
+            demon.scareDemon.SetActive(false);
             timer.SetTimeToBeat();
             Time.timeScale = 0;
             deadMenu.SetActive(true);
