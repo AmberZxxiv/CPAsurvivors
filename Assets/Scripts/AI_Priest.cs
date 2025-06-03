@@ -19,7 +19,6 @@ public class AI_PRiest : MonoBehaviour
     public Player_Movement player;
     public AI_Demon demon;
     public AI_Ghost ghost;
-    public Timer timer;
 
     // Start is called before the first frame update
     void Start()
@@ -63,7 +62,6 @@ public class AI_PRiest : MonoBehaviour
             screamPriest.Play();
             scarePriest.SetActive(true);
             StartCoroutine(EndScare());
-            timer.SetTimeToBeat();
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
             player.deadMenu.SetActive(true);

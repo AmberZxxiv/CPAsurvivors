@@ -5,9 +5,8 @@ using TMPro;
 
 public class Timer : MonoBehaviour
 {
-    [SerializeField] TextMeshProUGUI timerText;
-    [SerializeField] TextMeshProUGUI timetoBeat;
-    [SerializeField] TextMeshProUGUI fasterLoser;
+    public TextMeshProUGUI timerText;
+    public TextMeshProUGUI timetoBeat;
     float timerTime; 
 
     // Start is called before the first frame update
@@ -28,17 +27,15 @@ public class Timer : MonoBehaviour
 
     public void SetTimeToBeat()
     {
-        timetoBeat.text = "Best survivor: " + PlayerPrefs.GetFloat("timetoBeat").ToString();
-        fasterLoser.text = "Best loser: " + PlayerPrefs.GetFloat("fasterLoser").ToString();
-        // si el contador es MENOR que el tiempo a vencer, actualiza
         if (timerTime < PlayerPrefs.GetFloat("timetoBeat")||!PlayerPrefs.HasKey("timetoBeat"))
         {
             PlayerPrefs.SetFloat("timetoBeat", timerTime);
         }
-        // si el contador es MENOR que el anterior, actualiza
-        if (timerTime < PlayerPrefs.GetFloat("fasterLoser") || !PlayerPrefs.HasKey("fasterLoser"))
-        {
-            PlayerPrefs.SetFloat("fasterLoser", timerTime);
-        }
+
+        float thisTime = PlayerPrefs.GetFloat("timetoBeat");
+        timetoBeat.text = "Best survivor: " + thisTime.ToString();
+        int minutes = Mathf.FloorToInt(thisTime / 60);
+        int seconds = Mathf.FloorToInt(thisTime % 60);
+        timetoBeat.text = string.Format("{0:00}:{1:00}", minutes, seconds);
     }
 }

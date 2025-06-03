@@ -102,7 +102,6 @@ public class Player_Movement : MonoBehaviour
         if (lifes <= 0 || transform.position.y < -50)
         {
             demon.scareDemon.SetActive(false);
-            timer.SetTimeToBeat();
             Time.timeScale = 0;
             deadMenu.SetActive(true);
             Cursor.lockState = CursorLockMode.None;
