@@ -22,6 +22,12 @@ public class Main_Menu : MonoBehaviour
 
     public void StartGame() // recarga la escena de juego
     {
-        SceneManager.LoadScene(0);
+        SceneManager.LoadScene(1);
+    }
+
+    public void ExitGame()
+    {
+        Debug.Log("Salgo del .exe");
+        Application.Quit();
     }
 }

@@ -9,6 +9,7 @@ TagManager:
   - Priest
   - Demon
   - Ghost
+  - EXIT
   layers:
   - Default
   - TransparentFX
