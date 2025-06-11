@@ -3294,7 +3294,7 @@ MonoBehaviour:
   isGrounded: 0
   jumpSpeed: 2.5
   fallSpeed: 2.5
-  mouseSensitivity: 4
+  mouseSensitivity: 2
   cameraTransform: {fileID: 753607554}
   lanternTransform: {fileID: 678551632}
   lifes: 3
