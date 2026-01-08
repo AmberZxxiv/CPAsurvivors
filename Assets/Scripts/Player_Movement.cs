@@ -21,7 +21,7 @@ public class Player_Movement : MonoBehaviour
     public float jumpSpeed;
     public float fallSpeed;
 
-    //Esto es pa mover la camara con el ratón
+    //Esto es pa mover la camara con el ratï¿½n
     public float mouseSensitivity;
     private float mouseRotation = 0f;
     public Transform cameraTransform;
@@ -111,27 +111,27 @@ public class Player_Movement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        // aquí le damos los valores al transform cuando nos movemos
+        // aquï¿½ le damos los valores al transform cuando nos movemos
         Vector3 playerMovement = (transform.right * movLateral + transform.forward * movFrontal);
-        Vector3 playerSpeed = new Vector3 (playerMovement.x * movSpeed, rb.velocity.y, playerMovement.z * movSpeed);
-        rb.velocity = playerSpeed;
+        Vector3 playerSpeed = new Vector3 (playerMovement.x * movSpeed, rb.linearVelocity.y, playerMovement.z * movSpeed);
+        rb.linearVelocity = playerSpeed;
 
         // aumentamos la velocidad del salto al subir
-        if (rb.velocity.y > 0f)
+        if (rb.linearVelocity.y > 0f)
         {
-            rb.velocity += Vector3.up * Physics.gravity.y * jumpSpeed * Time.fixedDeltaTime;
+            rb.linearVelocity += Vector3.up * Physics.gravity.y * jumpSpeed * Time.fixedDeltaTime;
         }
         // aumentamos la gravedad al caer del salto
-        if (rb.velocity.y < 0f)
+        if (rb.linearVelocity.y < 0f)
         {
-            rb.velocity += Vector3.up * Physics.gravity.y * fallSpeed * Time.fixedDeltaTime;
+            rb.linearVelocity += Vector3.up * Physics.gravity.y * fallSpeed * Time.fixedDeltaTime;
         }
     }
     void Jump()
     {
         //actualizamos el estado del salto, la altura y damos la fuerza
         isGrounded = false;
-        rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
+        rb.linearVelocity = new Vector3(rb.linearVelocity.x, 0f, rb.linearVelocity.z);
         rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
     }
 
